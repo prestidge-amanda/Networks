@@ -34,12 +34,14 @@ public class router {
 
 
         // receive circuit db from nse
-        DatagramPacket receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
-        socketServer.receive(receivePacket);
-        circuit_DB circuit_db = db.parseUDPdata(receivePacket.getData());
 
         // while loop to receive pckts
         while (true) {
+
+            DatagramPacket receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
+            socketServer.receive(receivePacket);
+            circuit_DB circuit_db = db.parseUDPdata(receivePacket.getData());
+            System.out.println(circuit_db.getNumLinks());
 
             // send hello to all neighbours new neighours ?
 
@@ -53,7 +55,6 @@ public class router {
             // send LS_PDU update sender and via fields to appropriate values - send only once, don't fwd duplicates
 
             // Run SPF on Link State Databse  - converted to RIB
-            break;
             // Print LSD and RIB in log file
         }
 

@@ -19,6 +19,10 @@ public class circuit_DB {
         this.linkcost=linkcost;
     }
 
+    public int getNumLinks(){
+        return nbr_link;
+    }
+
     public static circuit_DB parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         int nbr_link = buffer.getInt();
