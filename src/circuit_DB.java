@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class circuit_DB {
@@ -12,6 +13,24 @@ public class circuit_DB {
             linkcost.add( new link_cost(i+1, 6535));
         }
     }
+
+    circuit_DB(int nbr_link, ArrayList<link_cost> linkcost){
+        this.nbr_link=nbr_link;
+        this.linkcost=linkcost;
+    }
+
+    public static circuit_DB parseUDPdata(byte[] UDPdata) throws Exception {
+        ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
+        int nbr_link = buffer.getInt();
+        ArrayList a = new ArrayList();
+        for (int i=0;i<nbr_link;i++){
+            int link = buffer.getInt();
+            int cost = buffer.getInt();
+            a.add(new link_cost(link,cost));
+        }
+        return new circuit_DB(nbr_link,new ArrayList<link_cost>(a));
+    }
+
 
     public void setLinkCost(int link, int cost){
         linkcost.set(link-1,new link_cost(link,cost));
