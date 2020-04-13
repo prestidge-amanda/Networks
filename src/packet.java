@@ -61,14 +61,19 @@ public class packet {
     }
 
     public byte[] getUDPdata() {
-        ByteBuffer buffer = ByteBuffer.allocate(512);
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        ByteBuffer buffer;
         if(packet_type=="INIT"){
+            buffer = ByteBuffer.allocate(4);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
         }else if (packet_type=="HELLO"){
+            buffer = ByteBuffer.allocate(8);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
             buffer.putInt(link_id);
-        }else if(packet_type=="LSPDU"){
+        }else{
+            buffer = ByteBuffer.allocate(20);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(sender);
             buffer.putInt(router_id);
             buffer.putInt(link_id);
