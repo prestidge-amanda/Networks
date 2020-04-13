@@ -22,7 +22,7 @@ public class circuit_DB {
     public static circuit_DB parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         int nbr_link = buffer.getInt();
-        ArrayList a = new ArrayList();
+        ArrayList<link_cost> a = new ArrayList<link_cost>();
         for (int i=0;i<nbr_link;i++){
             int link = buffer.getInt();
             int cost = buffer.getInt();
