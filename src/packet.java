@@ -1,3 +1,5 @@
+import java.nio.ByteBuffer;
+
 public class packet {
     private String packet_type;
     private int router_id;
@@ -28,6 +30,7 @@ public class packet {
         this.sender=sender;
         this.router_id=router_id;
         this.link_id=link_id;
+        this.packet_type="LSPDU";
         this.cost=cost;
         this.via=via;
     }
@@ -54,6 +57,42 @@ public class packet {
 
     public String getPacket_type(){
         return packet_type;
+    }
+
+
+    public byte[] getUDPdata() {
+        ByteBuffer buffer = ByteBuffer.allocate(512);
+        if(packet_type=="INIT"){
+            buffer.putInt(router_id);
+        }else if (packet_type=="HELLO"){
+            buffer.putInt(router_id);
+            buffer.putInt(link_id);
+        }else if(packet_type=="LSPDU"){
+            buffer.putInt(sender);
+            buffer.putInt(router_id);
+            buffer.putInt(link_id);
+            buffer.putInt(cost);
+            buffer.putInt(via);
+        }
+        return buffer.array();
+    }
+
+    public static packet parseUDPdata(byte[] UDPdata) throws Exception {
+        ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
+        if(buffer.array().length==2){
+            int router_id = buffer.getInt();
+            int link_id=buffer.getInt();
+            return new packet(router_id,link_id);
+        }else if (buffer.array().length==20){
+            int sender=buffer.getInt();
+            int router_id=buffer.getInt();
+            int link_id=buffer.getInt();
+            int cost=buffer.getInt();
+            int via=buffer.getInt();
+            return new packet(sender,router_id,link_id,cost,via);
+        }else{
+            return new packet(1);
+        }
     }
 
 
