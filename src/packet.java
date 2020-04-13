@@ -1,4 +1,5 @@
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class packet {
     private String packet_type;
@@ -61,6 +62,7 @@ public class packet {
 
     public byte[] getUDPdata() {
         ByteBuffer buffer = ByteBuffer.allocate(512);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         if(packet_type=="INIT"){
             buffer.putInt(router_id);
         }else if (packet_type=="HELLO"){
@@ -78,6 +80,7 @@ public class packet {
 
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         if(buffer.array().length==2){
             int router_id = buffer.getInt();
             int link_id=buffer.getInt();
