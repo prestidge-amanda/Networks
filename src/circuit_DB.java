@@ -1,4 +1,5 @@
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 public class circuit_DB {
@@ -25,6 +26,7 @@ public class circuit_DB {
 
     public static circuit_DB parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         int nbr_link = buffer.getInt();
         ArrayList<link_cost> a = new ArrayList<link_cost>();
         for (int i=0;i<nbr_link;i++){
