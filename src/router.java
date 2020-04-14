@@ -91,6 +91,7 @@ public class router {
                 recvHello++;
                 // log hello received
                 msg="R1 receives a HELLO: router_id "+p.getRouter_id()+" link_id " +p.getLink_id() +"\n";
+                logWriter.write(msg);
                 // check if hello recv twice?
                 for (int k=0;k<num_routers;k++){
                         if (k+1!=p.getRouter_id()){
@@ -102,7 +103,7 @@ public class router {
                                 socketServer.send(sendPacket);
                                 // Log sent LSPDU
                                 msg="R"+router_id+" sends a LSPDU: sender "+ packetL.getSender()+ " router_id "+ packetL.getRouter_id()+ " link_id "+ packetL.getLink_id() +
-                                        "cost" + packetL.getCost() + " via " + packetL.getVia() +"\n";
+                                        " cost " + packetL.getCost() + " via " + packetL.getVia() +"\n";
                                 logWriter.write(msg);
                             }
                         }

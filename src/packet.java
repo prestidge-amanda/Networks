@@ -99,8 +99,6 @@ public class packet {
         int num2=buffer.getInt(1);
         int num3 = buffer.getInt(2);
         if (num3>200){
-                System.out.println(num1);
-                System.out.print("received correct");
                 return new packet(num1,num2);
         }
         int cost=buffer.getInt(3);
