@@ -100,6 +100,7 @@ public class packet {
         int  num3;
         try{
              num3 = buffer.getInt();
+             System.out.println("num3:"+ num3);
         }catch(BufferUnderflowException e){
                 System.out.print("made the right packet");
                 return new packet(num1,num2);
