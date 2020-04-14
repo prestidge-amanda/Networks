@@ -101,6 +101,7 @@ public class packet {
         try{
              num3 = buffer.getInt();
         }catch(BufferUnderflowException e){
+                System.out.print("made the right packet");
                 return new packet(num1,num2);
         }
         int cost=buffer.getInt();
