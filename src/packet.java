@@ -97,12 +97,8 @@ public class packet {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         int num1 = buffer.getInt(0);
         int num2=buffer.getInt(1);
-        int  num3;
-        try{
-             num3 = buffer.getInt(2);
-             System.out.println("num3:"+ num3);
-        }catch(BufferUnderflowException e){
-                System.out.print("made the right packet");
+        int num3 = buffer.getInt(2);
+        if (num3>200){
                 return new packet(num1,num2);
         }
         int cost=buffer.getInt(3);
