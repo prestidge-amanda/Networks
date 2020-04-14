@@ -81,7 +81,6 @@ public class router {
         // while loop to receive pckts
        while (true) {
             // receive packets from neighbours
-            recieveBuffer = new byte[44];
             receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
             socketServer.receive(receivePacket);
             packet p = packet.parseUDPdata(receivePacket.getData());

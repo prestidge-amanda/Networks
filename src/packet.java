@@ -1,3 +1,4 @@
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -94,22 +95,17 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        int count = buffer.remaining();
-        System.out.println(count);
-        if(count==4){
-            int router_id = buffer.getInt();
-            int link_id=buffer.getInt();
-            return new packet(router_id,link_id);
-        }else if (count==20){
-            int sender=buffer.getInt();
-            int router_id=buffer.getInt();
-            int link_id=buffer.getInt();
-            int cost=buffer.getInt();
-            int via=buffer.getInt();
-            return new packet(sender,router_id,link_id,cost,via);
-        }else{
-            return new packet(1);
+        int num1 = buffer.getInt();
+        int num2=buffer.getInt();
+        int  num3;
+        try{
+             num3 = buffer.getInt();
+        }catch(BufferUnderflowException e){
+                return new packet(num1,num2);
         }
+        int cost=buffer.getInt();
+        int via=buffer.getInt();
+        return new packet(num1,num2,num3,cost,via);
     }
 
 
