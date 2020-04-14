@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class circuit_DB {
     private int nbr_link;
     private ArrayList<link_cost> linkcost;
+    private ArrayList<Boolean> hellos;
     private final int number_router = 5;
 
     circuit_DB(int nbr_link){
@@ -18,6 +19,18 @@ public class circuit_DB {
     circuit_DB(int nbr_link, ArrayList<link_cost> linkcost){
         this.nbr_link=nbr_link;
         this.linkcost=linkcost;
+        this.hellos= new ArrayList<Boolean>();
+        for (int i =0;i<nbr_link;i++){
+            hellos.add(false);
+        }
+    }
+
+    public void setHelloReceived(int i){
+        hellos.set(i,true);
+    }
+
+    public boolean getHello(int i){
+        return hellos.get(i);
     }
 
     public int getNumLinks(){
@@ -37,6 +50,13 @@ public class circuit_DB {
         return new circuit_DB(nbr_link,new ArrayList<link_cost>(a));
     }
 
+    public boolean getHelloStatus(int i){
+        return hellos.get(i);
+    }
+
+    public int getLink(int i){
+        return linkcost.get(i).getLink();
+    }
 
     public void setLinkCost(int link, int cost){
         linkcost.set(link-1,new link_cost(link,cost));

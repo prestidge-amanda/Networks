@@ -52,6 +52,14 @@ public class packet {
         return via;
     }
 
+    public void setVia(int via) {
+        this.via=via;
+    }
+
+    public void setSender(int sender){
+        this.sender=sender;
+    }
+
     public int getSender(){
         return sender;
     }
@@ -86,11 +94,11 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        if(buffer.array().length==2){
+        if(buffer.remaining()==2){
             int router_id = buffer.getInt();
             int link_id=buffer.getInt();
             return new packet(router_id,link_id);
-        }else if (buffer.array().length==20){
+        }else if (buffer.remaining()==5){
             int sender=buffer.getInt();
             int router_id=buffer.getInt();
             int link_id=buffer.getInt();
