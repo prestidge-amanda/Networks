@@ -94,6 +94,7 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
+        System.out.print(buffer.remaining());
         if(buffer.remaining()==2){
             int router_id = buffer.getInt();
             int link_id=buffer.getInt();
