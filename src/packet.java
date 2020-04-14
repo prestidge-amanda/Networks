@@ -95,18 +95,18 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        int num1 = buffer.getInt();
-        int num2=buffer.getInt();
+        int num1 = buffer.getInt(0);
+        int num2=buffer.getInt(1);
         int  num3;
         try{
-             num3 = buffer.getInt();
+             num3 = buffer.getInt(2);
              System.out.println("num3:"+ num3);
         }catch(BufferUnderflowException e){
                 System.out.print("made the right packet");
                 return new packet(num1,num2);
         }
-        int cost=buffer.getInt();
-        int via=buffer.getInt();
+        int cost=buffer.getInt(3);
+        int via=buffer.getInt(4);
         return new packet(num1,num2,num3,cost,via);
     }
 
