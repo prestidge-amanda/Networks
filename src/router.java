@@ -89,24 +89,21 @@ public class router {
             if (p.getPacket_type()=="HELLO"){
                 // log hello received
                 msg="R1 receives a HELLO: router_id "+p.getRouter_id()+" link_id " +p.getLink_id() +"\n";
-
-                // Check not already received hello
-                if(circuit_db.getHello(p.getRouter_id()-1)==false){
-                    recvHello++;
-                    circuit_db.setHelloReceived(p.getRouter_id()-1);
-                    // Send link state DB
-                    for (int i=0;i<LSDB.getSize();i++){
-                        packetL=LSDB.getData(i);
-                        packetL.setVia(p.getLink_id());
-                        sendBuffer=packetL.getUDPdata();
-                        sendPacket=new DatagramPacket(sendBuffer,sendBuffer.length,InetAddress.getByName(nse_host),nse_port);
-                        socketServer.send(sendPacket);
-
-                        // Log sent LSPDU
-                        msg="R"+router_id+" sends a LSPDU: sender "+ packetL.getSender()+ " router_id "+ packetL.getRouter_id()+ " link_id "+ packetL.getLink_id() +
-                                "cost" + packetL.getCost() + " via " + packetL.getVia() +"\n";
-                        logWriter.write(msg);
-                    }
+                // check if hello recv twice?
+                for (int k=0;k<num_routers;k++){
+                        if (k+1!=p.getRouter_id()){
+                            for (int i=0;i<LSDB.getSize(k);i++){
+                                packetL=LSDB.getData(k,i);
+                                packetL.setVia(p.getLink_id());
+                                sendBuffer=packetL.getUDPdata();
+                                sendPacket=new DatagramPacket(sendBuffer,sendBuffer.length,InetAddress.getByName(nse_host),nse_port);
+                                socketServer.send(sendPacket);
+                                // Log sent LSPDU
+                                msg="R"+router_id+" sends a LSPDU: sender "+ packetL.getSender()+ " router_id "+ packetL.getRouter_id()+ " link_id "+ packetL.getLink_id() +
+                                        "cost" + packetL.getCost() + " via " + packetL.getVia() +"\n";
+                                logWriter.write(msg);
+                            }
+                        }
                 }
             }
 
