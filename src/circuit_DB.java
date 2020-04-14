@@ -63,6 +63,6 @@ public class circuit_DB {
     }
 
     public int getLinkCost(int link){
-        return linkcost.get(link-1).getCost();
+        return linkcost.get(link).getCost();
     }
 }
