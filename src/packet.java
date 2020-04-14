@@ -95,11 +95,11 @@ public class packet {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         System.out.print(buffer.remaining());
-        if(buffer.remaining()==2){
+        if(buffer.remaining()==4){
             int router_id = buffer.getInt();
             int link_id=buffer.getInt();
             return new packet(router_id,link_id);
-        }else if (buffer.remaining()==5){
+        }else if (buffer.remaining()==20){
             int sender=buffer.getInt();
             int router_id=buffer.getInt();
             int link_id=buffer.getInt();
