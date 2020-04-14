@@ -87,6 +87,7 @@ public class router {
 
             // handle hello packets received
             if (p.getPacket_type()=="HELLO"){
+                recvHello++;
                 // log hello received
                 msg="R1 receives a HELLO: router_id "+p.getRouter_id()+" link_id " +p.getLink_id() +"\n";
                 // check if hello recv twice?
