@@ -81,9 +81,11 @@ public class router {
         // while loop to receive pckts
        while (true) {
             // receive packets from neighbours
+            recieveBuffer = new byte[44];
             receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
             socketServer.receive(receivePacket);
             packet p = packet.parseUDPdata(receivePacket.getData());
+            System.out.print(p.getRouter_id());
 
             // handle hello packets received
             if (p.getPacket_type()=="HELLO"){
@@ -110,6 +112,7 @@ public class router {
 
             // handle LSPDU packets received
             else{
+                System.out.print("something else");
                 // Add this info to link state db
 
                 // send LS_PDU update sender and via fields to appropriate values - send only once, don't fwd duplicates

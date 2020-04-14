@@ -5,7 +5,7 @@ public class link_state_DB {
     private int currentRouterId;
     private final int num_routers=5;
     link_state_DB(circuit_DB circuit_db,int currentRouterId){
-        data = new ArrayList<ArrayList<packet>>();
+        this.data = new ArrayList<ArrayList<packet>>();
         this.currentRouterId=currentRouterId;
         int sender;
         int router_id;
