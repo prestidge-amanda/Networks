@@ -51,7 +51,7 @@ public class router {
         socketServer.send(sendPacket);
 
         // log init sent
-        msg = "R" + router_id + "sends an INIT: router id "+ router_id + "\n";
+        msg = "R" + router_id + " sends an INIT: router_id "+ router_id + "\n";
         logWriter.write(msg);
 
 
@@ -62,7 +62,7 @@ public class router {
         System.out.println(circuit_db.getNumLinks());
 
         // log circuitDB received
-        msg = "R" + router_id+ "receives a CIRCUIT_DB: nbr_link " + circuit_db.getNumLinks()+"\n";
+        msg = "R" + router_id+ " receives a CIRCUIT_DB: nbr_link " + circuit_db.getNumLinks()+"\n";
         logWriter.write(msg);
 
         // create topology from circuit db
