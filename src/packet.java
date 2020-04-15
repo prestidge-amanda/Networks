@@ -73,7 +73,7 @@ public class packet {
 
     public byte[] getUDPdata() {
         ByteBuffer buffer;
-       if(packet_type=="INIT")
+    /*   if(packet_type=="INIT")
         {
             buffer = ByteBuffer.allocate(4);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -92,8 +92,8 @@ public class packet {
             IntBuffer iBuffer = buffer.asIntBuffer();
             int[] packetArray = {sender,router_id,link_id,cost,via};
             iBuffer.put(packetArray);
-        }
-      /*
+        }*/
+
        if(packet_type=="INIT"){
             buffer = ByteBuffer.allocate(4);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -111,7 +111,7 @@ public class packet {
             buffer.putInt(link_id);
             buffer.putInt(cost);
             buffer.putInt(via);
-        }*/
+        }
         return buffer.array();
     }
 
