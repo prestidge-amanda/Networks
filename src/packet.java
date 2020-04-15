@@ -96,23 +96,16 @@ public class packet {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.flip();
-        int count = buffer.remaining();
-        System.out.print(count);
-        if (count == 2){
-            int num1 = buffer.getInt();
-            int num2=buffer.getInt();
-            System.out.println("num1: " + num1 + " num2: "+ num2);
-            return new packet(num1,num2);
+        int num1 = buffer.getInt();
+        int num2=buffer.getInt();
+        int num3 = buffer.getInt();
+        if (num3>200){
+                return new packet(num1,num2);
         }
-        else {
-            int num1 = buffer.getInt();
-            int num2=buffer.getInt();
-            int num3 = buffer.getInt();
-            int cost=buffer.getInt();
-            int via=buffer.getInt();
-            System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+ num3);
-            return new packet(num1,num2,num3,cost,via);
-        }
+        int cost=buffer.getInt();
+        int via=buffer.getInt();
+        System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+num3 + " cost " + cost+ " via "+ via);
+        return new packet(num1,num2,num3,cost,via);
     }
 
 
