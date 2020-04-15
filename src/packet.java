@@ -95,7 +95,6 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        buffer.flip();
         int num1 = buffer.getInt();
         int num2=buffer.getInt();
         int num3 = buffer.getInt();
