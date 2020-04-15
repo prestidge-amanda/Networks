@@ -96,7 +96,7 @@ public class router {
                 msg="R1 receives a HELLO: router_id "+p.getRouter_id()+" link_id " +p.getLink_id() +"\n";
                 logWriter.write(msg);
                 // check if hello recv twice?
-             /*   for (int k=0;k<num_routers;k++){
+               for (int k=0;k<num_routers;k++){
                         if (k+1!=p.getRouter_id()){
                             for (int i=0;i<LSDB.getSize(k);i++){
                                 packetL=LSDB.getData(k,i);
@@ -110,7 +110,7 @@ public class router {
                                 logWriter.write(msg);
                             }
                         }
-                }*/
+                }
             }
 
             // handle LSPDU packets received

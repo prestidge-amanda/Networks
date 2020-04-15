@@ -122,11 +122,15 @@ public class packet {
         int count = iBuffer.remaining();
         int[] results = new int[count];
         iBuffer.get(results);
-        for(int i =0;i<results.length;i++){
+      /*  for(int i =0;i<results.length;i++){
             System.out.print(results[i] + ",");
         }
-        System.out.print("\n");
-        return new packet(results[0],results[1]);
+        System.out.print("\n");*/
+        if (results[3]==0){
+            return new packet(results[0],results[1]);
+        }else{
+            return new packet(results[0],results[1],results[2],results[3],results[4]);
+        }
         /*
         int num1 = buffer.getInt();
         int num2=buffer.getInt();
