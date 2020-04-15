@@ -73,7 +73,27 @@ public class packet {
 
     public byte[] getUDPdata() {
         ByteBuffer buffer;
-        if(packet_type=="INIT"){
+        if(packet_type=="INIT")
+        {
+            buffer = ByteBuffer.allocate(4);
+            IntBuffer iBuffer = buffer.asIntBuffer();
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+            int[] packetArray = {router_id};
+            iBuffer.put(packetArray);
+        }else if (packet_type=="HELLO"){
+            buffer = ByteBuffer.allocate(8);
+            IntBuffer iBuffer = buffer.asIntBuffer();
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+            int[] packetArray = {router_id,link_id};
+            iBuffer.put(packetArray);
+        }else {
+            buffer = ByteBuffer.allocate(20);
+            IntBuffer iBuffer = buffer.asIntBuffer();
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+            int[] packetArray = {sender,router_id,link_id,cost,via};
+            iBuffer.put(packetArray);
+        }
+    /*    if(packet_type=="INIT"){
             buffer = ByteBuffer.allocate(4);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
@@ -90,7 +110,7 @@ public class packet {
             buffer.putInt(link_id);
             buffer.putInt(cost);
             buffer.putInt(via);
-        }
+        }*/
         return buffer.array();
     }
 
@@ -99,18 +119,13 @@ public class packet {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         IntBuffer iBuffer = buffer.asIntBuffer();
         int count = iBuffer.remaining();
-        ArrayList<Integer> integers = new ArrayList<Integer>();
-        for(int i=0;i<count;i++){
-            integers.add(iBuffer.get());
-        }
-      /*  while(buffer.hasRemaining()){
-            integers.add(buffer.getInt());
-        }*/
-        for(int i =0;i<integers.size();i++){
-            System.out.print(integers.get(i) + ",");
+        int[] results = new int[count];
+        iBuffer.get(results);
+        for(int i =0;i<results.length;i++){
+            System.out.print(results[i] + ",");
         }
         System.out.print("\n");
-        return new packet(integers.get(0),integers.get(1));
+        return new packet(results[0],results[1]);
         /*
         int num1 = buffer.getInt();
         int num2=buffer.getInt();
