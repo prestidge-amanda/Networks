@@ -95,14 +95,14 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        int num1 = buffer.getInt(0);
-        int num2=buffer.getInt(1);
-        int num3 = buffer.getInt(2);
+        int num1 = buffer.getInt();
+        int num2=buffer.getInt();
+        int num3 = buffer.getInt();
         if (num3>200){
                 return new packet(num1,num2);
         }
-        int cost=buffer.getInt(3);
-        int via=buffer.getInt(4);
+        int cost=buffer.getInt();
+        int via=buffer.getInt();
         return new packet(num1,num2,num3,cost,via);
     }
 
