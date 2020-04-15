@@ -1,6 +1,7 @@
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 
 public class packet {
     private String packet_type;
@@ -95,6 +96,16 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        while(buffer.hasRemaining()){
+            integers.add(buffer.getInt());
+        }
+        for(int i =0;i<integers.size();i++){
+            System.out.print(integers.get(i) + ",");
+        }
+        System.out.print("/n");
+        return new packet(integers.get(0),integers.get(1));
+        /*
         int num1 = buffer.getInt();
         int num2=buffer.getInt();
         int num3 = buffer.getInt();
@@ -104,7 +115,7 @@ public class packet {
         int cost=buffer.getInt();
         int via=buffer.getInt();
         System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+num3 + " cost " + cost+ " via "+ via);
-        return new packet(num1,num2,num3,cost,via);
+        return new packet(num1,num2,num3,cost,via);*/
     }
 
 
