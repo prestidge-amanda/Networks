@@ -88,7 +88,7 @@ public class packet {
             iBuffer.put(packetArray);
         }else {
             buffer = ByteBuffer.allocate(20);
-           buffer.order(ByteOrder.LITTLE_ENDIAN);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
             IntBuffer iBuffer = buffer.asIntBuffer();
             int[] packetArray = {sender,router_id,link_id,cost,via};
             iBuffer.put(packetArray);
