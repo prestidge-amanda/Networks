@@ -98,6 +98,7 @@ public class packet {
         int num1 = buffer.getInt();
         int num2=buffer.getInt();
         int num3 = buffer.getInt();
+        System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+num3);
         if (num3>200){
                 return new packet(num1,num2);
         }
