@@ -103,7 +103,7 @@ public class packet {
         for(int i =0;i<integers.size();i++){
             System.out.print(integers.get(i) + ",");
         }
-        System.out.print("/n");
+        System.out.print("\n");
         return new packet(integers.get(0),integers.get(1));
         /*
         int num1 = buffer.getInt();

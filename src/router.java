@@ -83,6 +83,7 @@ public class router {
             // receive packets from neighbours
             receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
             socketServer.receive(receivePacket);
+            System.out.println("length of buffer " + recieveBuffer.length);
             packet p = packet.parseUDPdata(receivePacket.getData());
           //  System.out.print(p.getRouter_id());
 
