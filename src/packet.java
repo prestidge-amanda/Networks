@@ -76,11 +76,10 @@ public class packet {
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
         }else if (packet_type=="HELLO"){
-            buffer = ByteBuffer.allocate(12);
+            buffer = ByteBuffer.allocate(8);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
             buffer.putInt(link_id);
-            buffer.putInt(-1);
         }else{
             buffer = ByteBuffer.allocate(20);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -96,16 +95,24 @@ public class packet {
     public static packet parseUDPdata(byte[] UDPdata) throws Exception {
         ByteBuffer buffer = ByteBuffer.wrap(UDPdata);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        int num1 = buffer.getInt();
-        int num2=buffer.getInt();
-        int num3 = buffer.getInt();
-        System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+num3);
-        if (num3==-1){
-                return new packet(num1,num2);
+        buffer.flip();
+        int count = buffer.remaining();
+        System.out.print(count);
+        if (count == 2){
+            int num1 = buffer.getInt();
+            int num2=buffer.getInt();
+            System.out.println("num1: " + num1 + " num2: "+ num2);
+            return new packet(num1,num2);
         }
-        int cost=buffer.getInt();
-        int via=buffer.getInt();
-        return new packet(num1,num2,num3,cost,via);
+        else {
+            int num1 = buffer.getInt();
+            int num2=buffer.getInt();
+            int num3 = buffer.getInt();
+            int cost=buffer.getInt();
+            int via=buffer.getInt();
+            System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+ num3);
+            return new packet(num1,num2,num3,cost,via);
+        }
     }
 
 
