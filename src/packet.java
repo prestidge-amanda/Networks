@@ -76,10 +76,11 @@ public class packet {
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
         }else if (packet_type=="HELLO"){
-            buffer = ByteBuffer.allocate(8);
+            buffer = ByteBuffer.allocate(12);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             buffer.putInt(router_id);
             buffer.putInt(link_id);
+            buffer.putInt(-1);
         }else{
             buffer = ByteBuffer.allocate(20);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -99,7 +100,7 @@ public class packet {
         int num2=buffer.getInt();
         int num3 = buffer.getInt();
         System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+num3);
-        if (num3>200){
+        if (num3==-1){
                 return new packet(num1,num2);
         }
         int cost=buffer.getInt();
