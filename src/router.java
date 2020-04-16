@@ -30,7 +30,6 @@ public class router {
         packet hello;
         String msg;
         BufferedWriter logWriter;
-        rib_DB rib_db = new rib_DB(router_id);
         link_state_DB LSDB;
         packet packetL;
 
@@ -67,6 +66,15 @@ public class router {
 
         // create topology from circuit db
         LSDB = new link_state_DB(circuit_db,router_id);
+
+        // create initial RIB from LSDB
+        rib_DB rib_db = new rib_DB(router_id);
+        msg = rib_db.printRIB();
+        logWriter.write(msg);
+
+        // print initial LSBD
+        msg=LSDB.printDB();
+        logWriter.write(msg);
 
         // send hello to neighbours
         for (int i =0;i<circuit_db.getNumLinks();i++){
@@ -146,6 +154,7 @@ public class router {
                         }
                     }
                     // Run SPF on Link State Databse  - converted to RIB
+
 
                     // Print LSD and RIB in log file
                     msg=LSDB.printDB();
