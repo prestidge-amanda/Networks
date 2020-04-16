@@ -61,9 +61,10 @@ public class link_state_DB {
         String msg ="# Topology Database \n";
         for(int i=0;i<data.size();i++){
             if(data.get(i).size()>0){
-                msg+="R" + currentRouterId+ " -> R"+i+1+" nbr link " + data.get(i).size() + "\n";
+                int set = i+1;
+                msg+="R" + currentRouterId+ " -> R"+set+" nbr link " + data.get(i).size() + "\n";
                 for (int j=0;j<data.get(i).size();j++){
-                    msg+="R" + currentRouterId+ " -> R"+i+1+ " link "+ data.get(i).get(j).getLink_id()+ " cost "+data.get(i).get(j).getCost()+ "\n";
+                    msg+="R" + currentRouterId+ " -> R"+set+ " link "+ data.get(i).get(j).getLink_id()+ " cost "+data.get(i).get(j).getCost()+ "\n";
                 }
             }
         }

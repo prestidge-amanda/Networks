@@ -125,7 +125,7 @@ public class router {
             else{
                 // Add this info to link state db
                 boolean newEntry =LSDB.addPacket(p);
-                msg="R"+router_id+" receives a LSP DU: sender" + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
+                msg="R"+router_id+" receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                         p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
                 System.out.println(msg);
                 logWriter.write(msg);
@@ -139,7 +139,7 @@ public class router {
                             sendBuffer = sendLSPDU.getUDPdata();
                             sendPacket=new DatagramPacket(sendBuffer, sendBuffer.length, InetAddress.getByName(nse_host), nse_port);
                             socketServer.send(sendPacket);
-                            msg="R"+router_id+" sends a LSP DU: sender" + sendLSPDU.getSender() + " router_id "+sendLSPDU.getRouter_id() + " link_id " +
+                            msg="R"+router_id+" sends a LSP DU: sender " + sendLSPDU.getSender() + " router_id "+sendLSPDU.getRouter_id() + " link_id " +
                                     sendLSPDU.getLink_id() + " cost "+ sendLSPDU.getCost() + " via " + sendLSPDU.getVia() + "\n";
                             System.out.println(msg);
                             logWriter.write(msg);
