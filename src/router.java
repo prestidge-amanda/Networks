@@ -67,13 +67,13 @@ public class router {
         // create topology from circuit db
         LSDB = new link_state_DB(circuit_db,router_id);
 
-        // create initial RIB from LSDB
-        rib_DB rib_db = new rib_DB(router_id);
-        msg = rib_db.printRIB();
-        logWriter.write(msg);
-
         // print initial LSBD
         msg=LSDB.printDB();
+        logWriter.write(msg);
+
+        // create initial RIB and print
+        rib_DB rib_db = new rib_DB(router_id);
+        msg = rib_db.printRIB();
         logWriter.write(msg);
 
         // send hello to neighbours
