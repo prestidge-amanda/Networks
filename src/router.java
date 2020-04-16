@@ -95,7 +95,15 @@ public class router {
                 // log hello received
                 msg="R1 receives a HELLO: router_id "+p.getRouter_id()+" link_id " +p.getLink_id() +"\n";
                 logWriter.write(msg);
-                // check if hello recv twice?
+
+                // Track which links has received hello
+                for(int m=0;m<circuit_db.getNumLinks();m++){
+                    if(circuit_db.getLink(m)==p.getLink_id()){
+                        circuit_db.setHelloReceived(m);
+                        break;
+                    }
+                }
+
                for (int k=0;k<num_routers;k++){
                         if (k+1!=p.getRouter_id()){
                             for (int i=0;i<LSDB.getSize(k);i++){
@@ -115,16 +123,34 @@ public class router {
 
             // handle LSPDU packets received
             else{
-              //  System.out.print("something else");
                 // Add this info to link state db
+                boolean newEntry =LSDB.addPacket(p);
+                msg="R"+router_id+" receives a LSP DU: sender" + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
+                        p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
+                System.out.println(msg);
+                logWriter.write(msg);
 
-                // send LS_PDU update sender and via fields to appropriate values - send only once, don't fwd duplicates
+                if(newEntry){
+                    // send LS_PDU update sender and via fields to appropriate values - send only once, don't fwd duplicates
+                    for (int i =0;i<circuit_db.getNumLinks();i++){
+                        // only send to those that have sent hello
+                        if(circuit_db.getHello(i)){
+                            packet sendLSPDU = new packet(router_id,p.getRouter_id(),p.getLink_id(),p.getCost(),circuit_db.getLink(i));
+                            sendBuffer = sendLSPDU.getUDPdata();
+                            sendPacket=new DatagramPacket(sendBuffer, sendBuffer.length, InetAddress.getByName(nse_host), nse_port);
+                            socketServer.send(sendPacket);
+                            msg="R"+router_id+" sends a LSP DU: sender" + sendLSPDU.getSender() + " router_id "+sendLSPDU.getRouter_id() + " link_id " +
+                                    sendLSPDU.getLink_id() + " cost "+ sendLSPDU.getCost() + " via " + sendLSPDU.getVia() + "\n";
+                            System.out.println(msg);
+                            logWriter.write(msg);
+                        }
+                    }
+                    // Run SPF on Link State Databse  - converted to RIB
 
-                // Run SPF on Link State Databse  - converted to RIB
-
-                // Print LSD and RIB in log file
+                    // Print LSD and RIB in log file
+                }
             }
-            if(recvHello==circuit_db.getNumLinks()){
+            if(recvHello==circuit_db.getNumLinks()+1){
                 break;
             }
         }

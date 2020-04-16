@@ -35,4 +35,17 @@ public class link_state_DB {
         return data.get(router).get(index);
     }
 
+    public boolean addPacket(packet p){
+        packet currentPacket;
+        if(data.get(p.getRouter_id()).size()>0){
+            for(int i=0;i<data.get(p.getRouter_id()).size();i++){
+                currentPacket=data.get(p.getRouter_id()).get(i);
+                if(currentPacket.getLink_id()==p.getLink_id()){
+                    return false;
+                }
+            }
+        }
+        data.get(p.getRouter_id()).add(p);
+        return true;
+    }
 }
