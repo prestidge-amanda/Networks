@@ -37,9 +37,9 @@ public class link_state_DB {
 
     public boolean addPacket(packet p){
         packet currentPacket;
-        if(data.get(p.getRouter_id()).size()>0){
-            for(int i=0;i<data.get(p.getRouter_id()).size();i++){
-                currentPacket=data.get(p.getRouter_id()).get(i);
+        if(data.get(p.getRouter_id()-1).size()>0){
+            for(int i=0;i<data.get(p.getRouter_id()-1).size();i++){
+                currentPacket=data.get(p.getRouter_id()-1).get(i);
                 if(currentPacket.getLink_id()==p.getLink_id()){
                     return false;
                 }
