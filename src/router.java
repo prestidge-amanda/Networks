@@ -132,9 +132,9 @@ public class router {
             // handle LSPDU packets received
             else{
                 // Add this info to link state db
-                boolean newEntry =LSDB.addPacket(p);
                 msg="R"+router_id+" receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                         p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
+                boolean newEntry =LSDB.addPacket(p);
                 System.out.println(msg);
                 logWriter.write(msg);
 
