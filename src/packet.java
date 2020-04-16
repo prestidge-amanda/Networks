@@ -12,6 +12,15 @@ public class packet {
     private int cost;
     private int via;
 
+    packet(packet p){
+        this.packet_type=p.packet_type;
+        this.router_id=p.router_id;
+        this.link_id=p.link_id;
+        this.sender=p.sender;
+        this.cost=p.cost;
+        this.via=p.via;
+    }
+
     packet(int router_id, int link_id){
         this.router_id=router_id;
         this.link_id=link_id;
@@ -122,26 +131,11 @@ public class packet {
         int count = iBuffer.remaining();
         int[] results = new int[count];
         iBuffer.get(results);
-      /*  for(int i =0;i<results.length;i++){
-            System.out.print(results[i] + ",");
-        }
-        System.out.print("\n");*/
         if (results[3]==0){
             return new packet(results[0],results[1]);
         }else{
             return new packet(results[0],results[1],results[2],results[3],results[4]);
         }
-        /*
-        int num1 = buffer.getInt();
-        int num2=buffer.getInt();
-        int num3 = buffer.getInt();
-        if (num3>200){
-                return new packet(num1,num2);
-        }
-        int cost=buffer.getInt();
-        int via=buffer.getInt();
-        System.out.println("num1: " + num1 + " num2: "+ num2 + " num3 "+num3 + " cost " + cost+ " via "+ via);
-        return new packet(num1,num2,num3,cost,via);*/
     }
 
 
