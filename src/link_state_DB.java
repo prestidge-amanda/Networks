@@ -35,6 +35,14 @@ public class link_state_DB {
         return data.get(router).get(index);
     }
 
+    public int sizeDB(){
+        int size=0;
+        for (int i = 0;i<num_routers;i++){
+            size+=data.get(i).size();
+        }
+        return size;
+    }
+
     public boolean addPacket(packet p){
         packet currentPacket;
         if(data.get(p.getRouter_id()-1).size()>0){
@@ -47,5 +55,18 @@ public class link_state_DB {
         }
         data.get(p.getRouter_id()-1).add(p);
         return true;
+    }
+
+    public String printDB(){
+        String msg ="# Topology Database \n";
+        for(int i=0;i<data.size();i++){
+            if(data.get(i).size()>0){
+                msg+="R" + currentRouterId+ " -> R"+i+1+" nbr link " + data.get(i).size() + "\n";
+                for (int j=0;j<data.get(i).size();j++){
+                    msg+="R" + currentRouterId+ " -> R"+i+1+ " link "+ data.get(i).get(j).getLink_id()+ " cost "+data.get(i).get(j).getCost()+ "\n";
+                }
+            }
+        }
+        return msg;
     }
 }

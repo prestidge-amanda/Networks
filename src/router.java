@@ -148,9 +148,12 @@ public class router {
                     // Run SPF on Link State Databse  - converted to RIB
 
                     // Print LSD and RIB in log file
+                    msg=LSDB.printDB();
+                    System.out.print(msg);
+                    logWriter.write(msg);
                 }
             }
-            if(recvHello==circuit_db.getNumLinks()+1){
+            if(LSDB.sizeDB()==14){
                 break;
             }
         }
