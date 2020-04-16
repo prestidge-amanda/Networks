@@ -45,7 +45,7 @@ public class link_state_DB {
                 }
             }
         }
-        data.get(p.getRouter_id()).add(p);
+        data.get(p.getRouter_id()-1).add(p);
         return true;
     }
 }
