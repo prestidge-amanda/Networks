@@ -45,7 +45,10 @@ public class link_state_DB {
 
     public boolean addPacket(packet p){
         packet currentPacket;
-
+        // Add this info to link state db
+        String msg="receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
+                p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
+        System.out.print(msg);
         if(data.get((p.getRouter_id()-1)).size()>0){
             for(int i=0;i<data.get((p.getRouter_id()-1)).size();i++){
                 currentPacket=data.get((p.getRouter_id()-1)).get(i);
