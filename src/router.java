@@ -134,9 +134,9 @@ public class router {
                 // Add this info to link state db
                 msg="R"+router_id+" receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                         p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
+                logWriter.write(msg);
                 boolean newEntry =LSDB.addPacket(p);
                 System.out.println(msg);
-                logWriter.write(msg);
 
                 if(newEntry){
                     // send LS_PDU update sender and via fields to appropriate values - send only once, don't fwd duplicates
