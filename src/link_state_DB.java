@@ -102,14 +102,16 @@ public class link_state_DB {
             }
             this.rib.add(entry);
         }
-
+        int connected=0;
       for(int k=0;k<data.size();k++){
           if(data.get(k).size()>0){
               visited.add(false);
+              connected++;
+          }else{
+              visited.add(true);
           }
       }
 
-      int connected = visited.size();
 
        for(int i=0;i<connected-1;i++){
             distance+=currShort;
