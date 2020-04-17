@@ -40,8 +40,8 @@ public class link_state_DB {
                     entry.add(-1);
                     entry.add(0);
             }else{
-                    entry.add(65535);
-                    entry.add(65535);
+                    entry.add(Integer.MAX_VALUE);
+                    entry.add(Integer.MAX_VALUE);
             }
             this.rib.add(entry);
         }
