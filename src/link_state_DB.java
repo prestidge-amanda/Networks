@@ -109,9 +109,10 @@ public class link_state_DB {
             }
             this.rib.add(entry);
         }
+
         int connected=0;
-      for(int k=0;k<data.size();k++){
-          if(data.get(k).size()>0){
+      for(int k=0;k<link.size();k++){
+          if(link.get(k).size()>1){
               visited.add(false);
               connected++;
           }else{
