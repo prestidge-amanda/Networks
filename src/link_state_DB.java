@@ -83,7 +83,7 @@ public class link_state_DB {
     }
 
     private void updateRIB(){
-        int distance=0;
+       /* int distance=0;
         int currIndex=currentRouterId-1;
         int currShort=0;
         int nextIndex=currentRouterId-1;
@@ -108,7 +108,7 @@ public class link_state_DB {
                     nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
             }
-        }
+        }*/
     }
 
     public String printDB(){
