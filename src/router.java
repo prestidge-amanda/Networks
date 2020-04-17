@@ -159,6 +159,9 @@ public class router {
                     msg=LSDB.printDB();
                     System.out.print(msg);
                     logWriter.write(msg);
+                    msg=LSDB.printRIB();
+                    System.out.print(msg);
+                    logWriter.write(msg);
                 }
             }
             if(LSDB.sizeDB()==14){

@@ -80,7 +80,38 @@ public class link_state_DB {
             }
         }
         data.get((p.getRouter_id()-1)).add(p);
+        updateRIB();
         return true;
+    }
+
+    private void updateRIB(){
+        int distance=0;
+        int currIndex=currentRouterId-1;
+        int currShort=0;
+        int nextIndex=currentRouterId-1;
+        ArrayList<Boolean> visited = new ArrayList<>();
+        visited.add(false);
+        visited.add(false);
+        visited.add(false);
+        visited.add(false);
+        visited.add(false);
+        visited.add(false);
+        visited.set(currentRouterId-1,true);
+        for(int i=0;i<num_routers-1;i++){
+            distance+=currShort;
+            currShort=Integer.MAX_VALUE;
+            currIndex=nextIndex;
+            for(int j=0;j<data.get(currIndex).size();j++){
+                if(rib.get(data.get(i).get(j).getRouter_id()).get(1) > (distance+data.get(i).get(j).getCost())){
+                    rib.get(data.get(i).get(j).getRouter_id()).set(0,data.get(i).get(j).getVia());
+                    rib.get(data.get(i).get(j).getRouter_id()).set(1,data.get(i).get(j).getCost()+distance);
+                }
+                if(currShort>data.get(i).get(j).getCost()){
+                    currShort=data.get(i).get(j).getCost();
+                    nextIndex=data.get(i).get(j).getRouter_id()-1;
+                }
+            }
+        }
     }
 
     public String printDB(){
