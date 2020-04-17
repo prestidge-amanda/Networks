@@ -112,10 +112,16 @@ public class link_state_DB {
           }
       }
 
-
        for(int i=0;i<connected-1;i++){
+            //find shortest link
+           currShort=Integer.MAX_VALUE;
+            for(int j=0;j<data.get(currIndex).size();j++) {
+                if (currShort > data.get(currIndex).get(j).getCost() && visited.get(data.get(currIndex).get(j).getRouter_id() - 1) == false) {
+                    currShort = data.get(currIndex).get(j).getCost();
+                    nextIndex = data.get(currIndex).get(j).getRouter_id() - 1;
+                }
+            }
             distance+=currShort;
-            currShort=Integer.MAX_VALUE;
             currIndex=nextIndex;
             visited.set(currIndex,true);
             for(int j=0;j<data.get(currIndex).size();j++){
@@ -124,10 +130,6 @@ public class link_state_DB {
                 if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
-                }
-                if(currShort > data.get(currIndex).get(j).getCost()&&visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
-                    currShort=data.get(currIndex).get(j).getCost();
-                    nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
             }
         }
