@@ -84,7 +84,7 @@ public class link_state_DB {
 
     private void updateRIB(){
       int distance=0;
-        int currIndex;
+        int currIndex=currentRouterId-1;;
         int currShort=0;
         int nextIndex=currentRouterId-1;
         ArrayList<Boolean> visited = new ArrayList<>();
@@ -93,7 +93,7 @@ public class link_state_DB {
         ArrayList<Integer> entry;
         for (int i=0;i<num_routers;i++){
             entry = new ArrayList<Integer>();
-            if (i==currentRouterId-1){
+            if (i==currIndex){
                 entry.add(-1);
                 entry.add(0);
             }else{
@@ -119,7 +119,8 @@ public class link_state_DB {
             currIndex=nextIndex;
             visited.set(currIndex,true);
             for(int j=0;j<data.get(currIndex).size();j++){
-                System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ (distance+data.get(currIndex).get(j).getCost()) + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
+                int calc = distance+data.get(currIndex).get(j).getCost();
+                System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ calc + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
                 if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
