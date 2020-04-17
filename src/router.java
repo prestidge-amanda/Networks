@@ -130,20 +130,23 @@ public class router {
             }
 
             // handle LSPDU packets received
-            else{
+            else if (p.getPacket_type()=="LSPDU"){
                 // Add this info to link state db
                 msg="R"+router_id+" receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                         p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
                 logWriter.write(msg);
                 System.out.println(msg);
-                boolean newEntry =LSDB.addPacket(new packet(p));
+                boolean newEntry = false;
+                if(p.getRouter_id()!=router_id){
+                    newEntry =LSDB.addPacket(new packet(p));
+                }
 
 
                 if(newEntry){
                     // send LS_PDU update sender and via fields to appropriate values - send only once, don't fwd duplicates
                     for (int i =0;i<circuit_db.getNumLinks();i++){
                         // only send to those that have sent hello
-                        if(circuit_db.getHello(i)){
+                        if(circuit_db.getHello(i)&&p.getVia()!=circuit_db.getLink(i)){
                             packet sendLSPDU = new packet(router_id,p.getRouter_id(),p.getLink_id(),p.getCost(),circuit_db.getLink(i));
                             sendBuffer = sendLSPDU.getUDPdata();
                             sendPacket=new DatagramPacket(sendBuffer, sendBuffer.length, InetAddress.getByName(nse_host), nse_port);

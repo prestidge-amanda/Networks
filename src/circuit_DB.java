@@ -64,9 +64,6 @@ public class circuit_DB {
         return linkcost.get(i).getLink();
     }
 
-    public void setLinkCost(int link, int cost){
-        linkcost.set(link-1,new link_cost(link,cost));
-    }
 
     public int getLinkCost(int link){
         return linkcost.get(link).getCost();
