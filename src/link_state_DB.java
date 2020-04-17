@@ -90,7 +90,7 @@ public class link_state_DB {
         int currShort=0;
         int nextIndex=currentRouterId-1;
         ArrayList<Boolean> visited = new ArrayList<>();
-        visited.add(false);
+    /*    visited.add(false);
         visited.add(false);
         visited.add(false);
         visited.add(false);
@@ -112,7 +112,7 @@ public class link_state_DB {
                     nextIndex=data.get(i).get(j).getRouter_id()-1;
                 }
             }
-        }
+        }*/
     }
 
     public String printDB(){
