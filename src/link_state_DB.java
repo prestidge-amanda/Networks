@@ -93,13 +93,16 @@ public class link_state_DB {
         visited.add(false);
         visited.add(false);
         visited.add(false);
-        for(int i=0;i<num_routers-1;i++){
+        for(int i=0;i<num_routers;i++){
             distance+=currShort;
             currShort=65355;
             currIndex=nextIndex;
             visited.set(currIndex,true);
-            System.out.print("we calc");
+            if(data.get(currIndex).size()==0){
+                 currShort=0;
+            }
             for(int j=0;j<data.get(currIndex).size();j++){
+                System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ distance+data.get(currIndex).get(j).getCost() + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
                 if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
