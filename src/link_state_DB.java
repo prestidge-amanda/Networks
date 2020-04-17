@@ -9,6 +9,7 @@ public class link_state_DB {
 
     link_state_DB(circuit_DB circuit_db,int currentRouterId){
         this.data = new ArrayList<ArrayList<packet>>();
+        this.link = new ArrayList<ArrayList<packet>>();
         this.currentRouterId=currentRouterId;
         int sender;
         int router_id;
