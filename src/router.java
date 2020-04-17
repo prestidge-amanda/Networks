@@ -85,16 +85,15 @@ public class router {
             logWriter.write(msg);
         }
 
-        recieveBuffer=new byte[20];
-
         // while loop to receive pckts
        while (true) {
             // receive packets from neighbours
+            recieveBuffer=new byte[20];
             receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
             socketServer.receive(receivePacket);
             System.out.println("length of buffer " + recieveBuffer.length);
             packet p = packet.parseUDPdata(receivePacket.getData());
-          //  System.out.print(p.getRouter_id());
+            System.out.println("intial value rec:" + p.getRouter_id());
 
             // handle hello packets received
             if (p.getPacket_type()=="HELLO"){

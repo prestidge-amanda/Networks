@@ -115,10 +115,10 @@ public class link_state_DB {
         String msg ="# Topology Database \n";
         for(int i=0;i<data.size();i++){
             if(data.get(i).size()>0){
-                int set = i+1;
-                msg+="R" + currentRouterId+ " -> R"+set+" nbr link " + data.get(i).size() + "\n";
+                int index = i+1;
+                msg+="R" + currentRouterId+ " -> R"+index+" nbr link " + data.get(i).size() + "\n";
                 for (int j=0;j<data.get(i).size();j++){
-                    msg+="R" + currentRouterId+ " -> R"+set+ " link "+ data.get(i).get(j).getLink_id()+ " cost "+data.get(i).get(j).getCost()+ "\n";
+                    msg+="R" + currentRouterId+ " -> R"+index+ " link "+ data.get(i).get(j).getLink_id()+ " cost "+data.get(i).get(j).getCost()+ "\n";
                 }
             }
         }
@@ -127,15 +127,15 @@ public class link_state_DB {
 
     public String printRIB(){
         String msg = "#RIB\n";
-        int set;
+        int index;
         for(int i=0;i<num_routers;i++){
-            set=i+1;
+            index=i+1;
             if(rib.get(i).get(0)==-1){
-                msg+= "R"+currentRouterId+" -> R"+set +" -> Local, 0\n";
+                msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
             }else if(rib.get(i).get(0)==Integer.MAX_VALUE){
-                msg+= "R"+currentRouterId+" -> R"+set +" -> INF, INF\n";
+                msg+= "R"+currentRouterId+" -> R"+index +" -> INF, INF\n";
             }else{
-                msg+= "R"+currentRouterId+" -> R"+set +" -> R"+rib.get(i).get(0)+ ", " +rib.get(i).get(1)+"\n";
+                msg+= "R"+currentRouterId+" -> R"+index +" -> R"+rib.get(i).get(0)+ ", " +rib.get(i).get(1)+"\n";
             }
         }
         return msg;
