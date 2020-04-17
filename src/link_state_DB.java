@@ -95,7 +95,7 @@ public class link_state_DB {
         visited.add(false);
         for(int i=0;i<num_routers-1;i++){
             distance+=currShort;
-            currShort=Integer.MAX_VALUE;
+            currShort=65355;
             currIndex=nextIndex;
             visited.set(currIndex,true);
             System.out.print("we calc");
@@ -104,7 +104,7 @@ public class link_state_DB {
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
-                if(currShort>data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
+                if(currShort >data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
                     currShort=data.get(currIndex).get(j).getCost();
                     nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
