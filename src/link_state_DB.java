@@ -40,8 +40,8 @@ public class link_state_DB {
                     entry.add(-1);
                     entry.add(0);
             }else{
-                entry.add(Integer.MAX_VALUE);
-                    entry.add(Integer.MAX_VALUE);
+                    entry.add(65535);
+                    entry.add(65535);
             }
             this.rib.add(entry);
         }
@@ -133,7 +133,7 @@ public class link_state_DB {
             index=i+1;
             if(rib.get(i).get(0)==-1){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
-            }else if(rib.get(i).get(0)==Integer.MAX_VALUE){
+            }else if(rib.get(i).get(0)==65535){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> INF, INF\n";
             }else{
                 msg+= "R"+currentRouterId+" -> R"+index +" -> R"+rib.get(i).get(0)+ ", " +rib.get(i).get(1)+"\n";
