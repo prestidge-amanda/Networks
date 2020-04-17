@@ -149,7 +149,7 @@ public class link_state_DB {
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
             }
-        }*/
+        }
     }
 
     public String printDB(){
