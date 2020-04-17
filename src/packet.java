@@ -110,11 +110,11 @@ public class packet {
         int count = iBuffer.remaining();
         int[] results = new int[count];
         iBuffer.get(results);
-        System.out.print("in results: ");
-        for(int i=0;i<5;i++){
-            System.out.print(results[i]);
-        }
-        System.out.print("\n");
+    //    System.out.print("in results: ");
+  //      for(int i=0;i<5;i++){
+  //          System.out.print(results[i]);
+  //      }
+   //     System.out.print("\n");
         if (results[3]==0){
             return new packet(results[0],results[1]);
         }else{

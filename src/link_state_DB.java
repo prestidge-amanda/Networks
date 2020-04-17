@@ -68,7 +68,7 @@ public class link_state_DB {
         // Add this info to link state db
         String msg="receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                 p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
-        System.out.print(msg);
+      //  System.out.print(msg);
         if(data.get((p.getRouter_id()-1)).size()>0){
             for(int i=0;i<data.get((p.getRouter_id()-1)).size();i++){
                 currentPacket=data.get((p.getRouter_id()-1)).get(i);
@@ -83,7 +83,7 @@ public class link_state_DB {
     }
 
     private void updateRIB(){
-      int distance=0;
+      /*int distance=0;
         int currIndex=currentRouterId-1;;
         int currShort=0;
         int nextIndex=currentRouterId-1;
@@ -118,11 +118,12 @@ public class link_state_DB {
             //find shortest link
            currShort=Integer.MAX_VALUE;
             for(int j=0;j<data.get(currIndex).size();j++) {
-                if (currShort > data.get(currIndex).get(j).getCost() && visited.get(data.get(currIndex).get(j).getRouter_id() - 1) == false) {
+                System.out.print("curr short:" + currShort+" curr index:"+ currIndex +"\n");
+                if (currShort > data.get(currIndex).get(j).getCost()) {
                     currShort = data.get(currIndex).get(j).getCost();
-                    nextIndex = data.get(currIndex).get(j).getRouter_id() - 1;
                 }
             }
+
             System.out.print("curr short:" + currShort+" curr index:"+ currIndex +"\n");
             distance+=currShort;
             currIndex=nextIndex;
@@ -137,7 +138,7 @@ public class link_state_DB {
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
             }
-        }
+        }*/
     }
 
     public String printDB(){

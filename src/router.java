@@ -58,7 +58,7 @@ public class router {
         DatagramPacket receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
         socketServer.receive(receivePacket);
         circuit_DB circuit_db = db.parseUDPdata(receivePacket.getData());
-        System.out.println(circuit_db.getNumLinks());
+      //  System.out.println(circuit_db.getNumLinks());
 
         // log circuitDB received
         msg = "R" + router_id+ " receives a CIRCUIT_DB: nbr_link " + circuit_db.getNumLinks()+"\n";
@@ -91,9 +91,9 @@ public class router {
             recieveBuffer=new byte[20];
             receivePacket = new DatagramPacket(recieveBuffer, recieveBuffer.length);
             socketServer.receive(receivePacket);
-            System.out.println("length of buffer " + recieveBuffer.length);
+         //   System.out.println("length of buffer " + recieveBuffer.length);
             packet p = packet.parseUDPdata(receivePacket.getData());
-            System.out.println("intial value rec:" + p.getRouter_id());
+       //     System.out.println("intial value rec:" + p.getRouter_id());
 
             // handle hello packets received
             if (p.getPacket_type()=="HELLO"){
@@ -134,7 +134,7 @@ public class router {
                 msg="R"+router_id+" receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                         p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
                 logWriter.write(msg);
-                System.out.println(msg);
+              //  System.out.println(msg);
                 boolean newEntry = false;
                 if(p.getRouter_id()!=router_id){
                     newEntry =LSDB.addPacket(new packet(p));
@@ -152,7 +152,7 @@ public class router {
                             socketServer.send(sendPacket);
                             msg="R"+router_id+" sends a LSP DU: sender " + sendLSPDU.getSender() + " router_id "+sendLSPDU.getRouter_id() + " link_id " +
                                     sendLSPDU.getLink_id() + " cost "+ sendLSPDU.getCost() + " via " + sendLSPDU.getVia() + "\n";
-                            System.out.println(msg);
+                        //    System.out.println(msg);
                             logWriter.write(msg);
                         }
                     }
@@ -161,10 +161,10 @@ public class router {
 
                     // Print LSD and RIB in log file
                     msg=LSDB.printDB();
-                    System.out.print(msg);
+                 //   System.out.print(msg);
                     logWriter.write(msg);
                     msg=LSDB.printRIB();
-                    System.out.print(msg);
+  //                  System.out.print(msg);
                     logWriter.write(msg);
                 }
             }
