@@ -83,16 +83,11 @@ public class link_state_DB {
     }
 
     private void updateRIB(){
-     /*   int distance=0;
+      int distance=0;
         int currIndex;
         int currShort=0;
         int nextIndex=currentRouterId-1;
         ArrayList<Boolean> visited = new ArrayList<>();
-        visited.add(false);
-        visited.add(false);
-        visited.add(false);
-        visited.add(false);
-        visited.add(false);
 
         this.rib=new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> entry;
@@ -108,32 +103,31 @@ public class link_state_DB {
             this.rib.add(entry);
         }
 
-        for(int i=0;i<num_routers-1;i++){
-            // find min distance
-            int smallValue = Integer.MAX_VALUE;
-            int smallIndex= -1;
-            for(int j = 0; j<)
-        }*/
-       /* for(int i=0;i<num_routers-1;i++){
+      for(int k=0;k<data.size();k++){
+          if(data.get(k).size()>0){
+              visited.add(false);
+          }
+      }
+
+      int connected = visited.size();
+
+       for(int i=0;i<connected-1;i++){
             distance+=currShort;
-            currShort=65355;
+            currShort=Integer.MAX_VALUE;
             currIndex=nextIndex;
             visited.set(currIndex,true);
-            if(data.get(currIndex).size()==0){
-                 currShort=0;
-            }
             for(int j=0;j<data.get(currIndex).size();j++){
                 System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ (distance+data.get(currIndex).get(j).getCost()) + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
                 if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
-                if(currShort >data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
+                if(currShort > data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
                     currShort=data.get(currIndex).get(j).getCost();
                     nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
             }
-        }*/
+        }
     }
 
     public String printDB(){
