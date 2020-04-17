@@ -2,8 +2,10 @@ import java.util.ArrayList;
 
 public class link_state_DB {
     private ArrayList<ArrayList<packet>> data;
+    private ArrayList<ArrayList<Integer>> rib;
     private int currentRouterId;
     private final int num_routers=5;
+
     link_state_DB(circuit_DB circuit_db,int currentRouterId){
         this.data = new ArrayList<ArrayList<packet>>();
         this.currentRouterId=currentRouterId;
@@ -24,6 +26,26 @@ public class link_state_DB {
             via = -1;
             p = new packet(sender,router_id,link_id,cost,via);
             data.get(currentRouterId-1).add(p);
+        }
+
+        rib_DB(currentRouterId);
+    }
+
+    private void rib_DB(int currentRouter){
+        this.rib=new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> entry;
+        for (int i=0;i<num_routers;i++){
+            entry = new ArrayList<Integer>();
+            for(int j=0;j<num_routers;j++){
+                if (i==currentRouter-1&&j==currentRouter-1){
+                    entry.add(-1);
+                    entry.add(0);
+                }else{
+                    entry.add(Integer.MAX_VALUE);
+                    entry.add(Integer.MAX_VALUE);
+                }
+            }
+            this.rib.add(entry);
         }
     }
 
@@ -70,6 +92,22 @@ public class link_state_DB {
                 for (int j=0;j<data.get(i).size();j++){
                     msg+="R" + currentRouterId+ " -> R"+set+ " link "+ data.get(i).get(j).getLink_id()+ " cost "+data.get(i).get(j).getCost()+ "\n";
                 }
+            }
+        }
+        return msg;
+    }
+
+    public String printRIB(){
+        String msg = "#RIB\n";
+        int set;
+        for(int i=0;i<num_routers;i++){
+            set=i+1;
+            if(rib.get(i).get(0)==-1){
+                msg+= "R"+currentRouterId+" -> R"+set +" -> Local, 0\n";
+            }else if(rib.get(i).get(0)==Integer.MAX_VALUE){
+                msg+= "R"+currentRouterId+" -> R"+set +" -> INF, INF\n";
+            }else{
+                msg+= "R"+currentRouterId+" -> R"+set +" -> R"+rib.get(i).get(0)+ ", " +rib.get(i).get(1)+"\n";
             }
         }
         return msg;

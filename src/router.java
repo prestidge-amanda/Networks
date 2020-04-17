@@ -72,8 +72,7 @@ public class router {
         logWriter.write(msg);
 
         // create initial RIB and print
-        rib_DB rib_db = new rib_DB(router_id);
-        msg = rib_db.printRIB();
+        msg = LSDB.printRIB();
         logWriter.write(msg);
 
         // send hello to neighbours
