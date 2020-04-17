@@ -18,6 +18,7 @@ public class link_state_DB {
         packet p;
         for(int j=0;j<num_routers;j++){
             data.add(new ArrayList<packet>());
+            link.add(new ArrayList<packet>());
         }
         for(int i= 0; i<circuit_db.getNumLinks();i++){
             sender = currentRouterId;
@@ -27,6 +28,7 @@ public class link_state_DB {
             via = -1;
             p = new packet(sender,router_id,link_id,cost,via);
             data.get(currentRouterId-1).add(p);
+            link.get(link_id-1).add(p);
         }
 
         rib_DB();
