@@ -112,7 +112,9 @@ public class link_state_DB {
           }
       }
 
+      visited.set(currIndex,true);
        for(int i=0;i<connected-1;i++){
+
             //find shortest link
            currShort=Integer.MAX_VALUE;
             for(int j=0;j<data.get(currIndex).size();j++) {
@@ -125,6 +127,8 @@ public class link_state_DB {
             distance+=currShort;
             currIndex=nextIndex;
             visited.set(currIndex,true);
+
+            // update neighbours of shortest
             for(int j=0;j<data.get(currIndex).size();j++){
                 int calc = distance+data.get(currIndex).get(j).getCost();
                 System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ calc + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
