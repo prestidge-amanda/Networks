@@ -84,7 +84,7 @@ public class link_state_DB {
 
     private void updateRIB(){
         int distance=0;
-        int currIndex=currentRouterId-1;
+        int currIndex;
         int currShort=0;
         int nextIndex=currentRouterId-1;
         ArrayList<Boolean> visited = new ArrayList<>();
@@ -98,8 +98,9 @@ public class link_state_DB {
             currShort=Integer.MAX_VALUE;
             currIndex=nextIndex;
             visited.set(currIndex,true);
+            System.out.print("we calc");
             for(int j=0;j<data.get(currIndex).size();j++){
-                if(rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost())&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
+                if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
