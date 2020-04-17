@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class link_state_DB {
     private ArrayList<ArrayList<packet>> data;
+    private ArrayList<ArrayList<packet>> link;
     private ArrayList<ArrayList<Integer>> rib;
     private int currentRouterId;
     private final int num_routers=5;
@@ -78,12 +79,13 @@ public class link_state_DB {
             }
         }
         data.get((p.getRouter_id()-1)).add(p);
+        link.get(p.getLink_id()-1).add(p);
         updateRIB();
         return true;
     }
 
     private void updateRIB(){
-      /*int distance=0;
+      int distance=0;
         int currIndex=currentRouterId-1;;
         int currShort=0;
         int nextIndex=currentRouterId-1;
@@ -112,6 +114,7 @@ public class link_state_DB {
           }
       }
 
+      int check;
       visited.set(currIndex,true);
        for(int i=0;i<connected-1;i++){
 
@@ -119,8 +122,16 @@ public class link_state_DB {
            currShort=Integer.MAX_VALUE;
             for(int j=0;j<data.get(currIndex).size();j++) {
                 System.out.print("curr short:" + currShort+" curr index:"+ currIndex +"\n");
-                if (currShort > data.get(currIndex).get(j).getCost()) {
-                    currShort = data.get(currIndex).get(j).getCost();
+                if(link.get(data.get(currIndex).get(j).getLink_id()-1).size()>1){
+                    if(link.get(data.get(currIndex).get(j).getLink_id()-1).get(0).getRouter_id()-1!=currIndex){
+                        check=link.get(data.get(currIndex).get(j).getLink_id()-1).get(0).getRouter_id()-1;
+                    }else{
+                        check=link.get(data.get(currIndex).get(j).getLink_id()-1).get(1).getRouter_id()-1;
+                    }
+                    if (currShort > data.get(currIndex).get(j).getCost() && visited.get(check)==false) {
+                        currShort = data.get(currIndex).get(j).getCost();
+                        nextIndex=check;
+                    }
                 }
             }
 
