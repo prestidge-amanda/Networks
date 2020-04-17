@@ -83,7 +83,7 @@ public class link_state_DB {
     }
 
     private void updateRIB(){
-        int distance=0;
+     /*   int distance=0;
         int currIndex;
         int currShort=0;
         int nextIndex=currentRouterId-1;
@@ -93,7 +93,28 @@ public class link_state_DB {
         visited.add(false);
         visited.add(false);
         visited.add(false);
-        for(int i=0;i<num_routers;i++){
+
+        this.rib=new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> entry;
+        for (int i=0;i<num_routers;i++){
+            entry = new ArrayList<Integer>();
+            if (i==currentRouterId-1){
+                entry.add(-1);
+                entry.add(0);
+            }else{
+                entry.add(Integer.MAX_VALUE);
+                entry.add(Integer.MAX_VALUE);
+            }
+            this.rib.add(entry);
+        }
+
+        for(int i=0;i<num_routers-1;i++){
+            // find min distance
+            int smallValue = Integer.MAX_VALUE;
+            int smallIndex= -1;
+            for(int j = 0; j<)
+        }*/
+       /* for(int i=0;i<num_routers-1;i++){
             distance+=currShort;
             currShort=65355;
             currIndex=nextIndex;
@@ -102,7 +123,7 @@ public class link_state_DB {
                  currShort=0;
             }
             for(int j=0;j<data.get(currIndex).size();j++){
-                System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ distance+data.get(currIndex).get(j).getCost() + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
+                System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ (distance+data.get(currIndex).get(j).getCost()) + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
                 if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
@@ -112,7 +133,7 @@ public class link_state_DB {
                     nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
             }
-        }
+        }*/
     }
 
     public String printDB(){
@@ -136,7 +157,7 @@ public class link_state_DB {
             index=i+1;
             if(rib.get(i).get(0)==-1){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
-            }else if(rib.get(i).get(0)==65535){
+            }else if(rib.get(i).get(0)==Integer.MAX_VALUE){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> INF, INF\n";
             }else{
                 msg+= "R"+currentRouterId+" -> R"+index +" -> R"+rib.get(i).get(0)+ ", " +rib.get(i).get(1)+"\n";
