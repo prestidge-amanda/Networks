@@ -28,22 +28,20 @@ public class link_state_DB {
             data.get(currentRouterId-1).add(p);
         }
 
-        rib_DB(currentRouterId);
+        rib_DB();
     }
 
-    private void rib_DB(int currentRouter){
+    private void rib_DB(){
         this.rib=new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> entry;
         for (int i=0;i<num_routers;i++){
             entry = new ArrayList<Integer>();
-            for(int j=0;j<num_routers;j++){
-                if (i==currentRouter-1&&j==currentRouter-1){
+            if (i==currentRouterId-1){
                     entry.add(-1);
                     entry.add(0);
-                }else{
+            }else{
+                entry.add(Integer.MAX_VALUE);
                     entry.add(Integer.MAX_VALUE);
-                    entry.add(Integer.MAX_VALUE);
-                }
             }
             this.rib.add(entry);
         }
