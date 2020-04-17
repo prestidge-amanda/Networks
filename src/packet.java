@@ -64,6 +64,10 @@ public class packet {
         return via;
     }
 
+    public void setSender(int sender){
+        this.sender=sender;
+    }
+
     public void setVia(int via) {
         this.via=via;
     }

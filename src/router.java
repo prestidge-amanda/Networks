@@ -116,6 +116,7 @@ public class router {
                             for (int i=0;i<LSDB.getSize(k);i++){
                                 packetL=LSDB.getData(k,i);
                                 packetL.setVia(p.getLink_id());
+                                packetL.setSender(router_id);
                                 sendBuffer=packetL.getUDPdata();
                                 sendPacket=new DatagramPacket(sendBuffer,sendBuffer.length,InetAddress.getByName(nse_host),nse_port);
                                 socketServer.send(sendPacket);
