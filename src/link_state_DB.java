@@ -124,7 +124,7 @@ public class link_state_DB {
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
                     rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
-                if(currShort > data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
+                if(currShort > data.get(currIndex).get(j).getCost()&&visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
                     currShort=data.get(currIndex).get(j).getCost();
                     nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
