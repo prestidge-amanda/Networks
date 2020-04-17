@@ -19,6 +19,8 @@ public class link_state_DB {
         packet p;
         for(int j=0;j<num_routers;j++){
             data.add(new ArrayList<packet>());
+        }
+        for(int k=0; k<7;k++){
             link.add(new ArrayList<packet>());
         }
         for(int i= 0; i<circuit_db.getNumLinks();i++){
