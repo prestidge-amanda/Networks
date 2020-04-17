@@ -101,12 +101,13 @@ public class link_state_DB {
             distance+=currShort;
             currShort=Integer.MAX_VALUE;
             currIndex=nextIndex;
+            visited.set(currIndex,true);
             for(int j=0;j<data.get(currIndex).size();j++){
-                if(rib.get(data.get(i).get(j).getRouter_id()).get(1) > (distance+data.get(i).get(j).getCost())){
-                    rib.get(data.get(i).get(j).getRouter_id()).set(0,data.get(i).get(j).getVia());
-                    rib.get(data.get(i).get(j).getRouter_id()).set(1,data.get(i).get(j).getCost()+distance);
+                if(rib.get(data.get(currIndex).get(j).getRouter_id()).get(1) > (distance+data.get(currIndex).get(j).getCost())){
+                    rib.get(data.get(currIndex).get(j).getRouter_id()).set(0,data.get(currIndex).get(j).getVia());
+                    rib.get(data.get(currIndex).get(j).getRouter_id()).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
-                if(currShort>data.get(i).get(j).getCost()){
+                if(currShort>data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
                     currShort=data.get(i).get(j).getCost();
                     nextIndex=data.get(i).get(j).getRouter_id()-1;
                 }
