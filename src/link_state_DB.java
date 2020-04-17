@@ -88,29 +88,28 @@ public class link_state_DB {
         int currShort=0;
         int nextIndex=currentRouterId-1;
         ArrayList<Boolean> visited = new ArrayList<>();
-    /*    visited.add(false);
         visited.add(false);
         visited.add(false);
         visited.add(false);
         visited.add(false);
         visited.add(false);
-        visited.set(currentRouterId-1,true);
+        visited.add(false);
         for(int i=0;i<num_routers-1;i++){
             distance+=currShort;
             currShort=Integer.MAX_VALUE;
             currIndex=nextIndex;
             visited.set(currIndex,true);
             for(int j=0;j<data.get(currIndex).size();j++){
-                if(rib.get(data.get(currIndex).get(j).getRouter_id()).get(1) > (distance+data.get(currIndex).get(j).getCost())){
-                    rib.get(data.get(currIndex).get(j).getRouter_id()).set(0,data.get(currIndex).get(j).getVia());
-                    rib.get(data.get(currIndex).get(j).getRouter_id()).set(1,data.get(currIndex).get(j).getCost()+distance);
+                if(rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost())&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
+                    rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
+                    rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
                 }
                 if(currShort>data.get(currIndex).get(j).getCost()&&visited.get(currIndex)==false){
-                    currShort=data.get(i).get(j).getCost();
-                    nextIndex=data.get(i).get(j).getRouter_id()-1;
+                    currShort=data.get(currIndex).get(j).getCost();
+                    nextIndex=data.get(currIndex).get(j).getRouter_id()-1;
                 }
             }
-        }*/
+        }
     }
 
     public String printDB(){
