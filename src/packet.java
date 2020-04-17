@@ -68,10 +68,6 @@ public class packet {
         this.via=via;
     }
 
-    public void setSender(int sender){
-        this.sender=sender;
-    }
-
     public int getSender(){
         return sender;
     }
@@ -82,26 +78,6 @@ public class packet {
 
     public byte[] getUDPdata() {
         ByteBuffer buffer;
-    /*   if(packet_type=="INIT")
-        {
-            buffer = ByteBuffer.allocate(4);
-            buffer.order(ByteOrder.LITTLE_ENDIAN);
-            IntBuffer iBuffer = buffer.asIntBuffer();
-            int[] packetArray = {router_id};
-            iBuffer.put(packetArray);
-        }else if (packet_type=="HELLO"){
-            buffer = ByteBuffer.allocate(8);
-           buffer.order(ByteOrder.LITTLE_ENDIAN);
-            IntBuffer iBuffer = buffer.asIntBuffer();
-            int[] packetArray = {router_id,link_id};
-            iBuffer.put(packetArray);
-        }else {
-            buffer = ByteBuffer.allocate(20);
-            buffer.order(ByteOrder.LITTLE_ENDIAN);
-            IntBuffer iBuffer = buffer.asIntBuffer();
-            int[] packetArray = {sender,router_id,link_id,cost,via};
-            iBuffer.put(packetArray);
-        }*/
 
        if(packet_type=="INIT"){
             buffer = ByteBuffer.allocate(4);

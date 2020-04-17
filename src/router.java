@@ -134,7 +134,7 @@ public class router {
                 msg="R"+router_id+" receives a LSP DU: sender " + p.getSender() + " router_id "+p.getRouter_id() + " link_id " +
                         p.getLink_id() + " cost "+ p.getCost() + " via " + p.getVia() + "\n";
                 logWriter.write(msg);
-                boolean newEntry =LSDB.addPacket(p);
+                boolean newEntry =LSDB.addPacket(new packet(p));
                 System.out.println(msg);
 
                 if(newEntry){
