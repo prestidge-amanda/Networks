@@ -121,6 +121,7 @@ public class link_state_DB {
                     nextIndex = data.get(currIndex).get(j).getRouter_id() - 1;
                 }
             }
+            System.out.print("curr short:" + currShort+" curr index:"+ currIndex +"\n");
             distance+=currShort;
             currIndex=nextIndex;
             visited.set(currIndex,true);
