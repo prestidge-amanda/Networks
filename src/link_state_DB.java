@@ -93,7 +93,6 @@ public class link_state_DB {
         visited.add(false);
         visited.add(false);
         visited.add(false);
-        visited.add(false);
         for(int i=0;i<num_routers-1;i++){
             distance+=currShort;
             currShort=Integer.MAX_VALUE;

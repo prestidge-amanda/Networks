@@ -7,6 +7,11 @@ public class link_cost {
         this.cost=cost;
     }
 
+    link_cost(link_cost l){
+        this.link=l.link;
+        this.cost=l.cost;
+    }
+
     public int getCost() {
         return cost;
     }

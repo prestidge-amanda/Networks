@@ -16,6 +16,12 @@ public class circuit_DB {
         }
     }
 
+    circuit_DB(circuit_DB c){
+        this.nbr_link=c.nbr_link;
+        this.linkcost=new ArrayList<link_cost>(c.linkcost);
+        this.hellos=new ArrayList<Boolean>(hellos);
+    }
+
     circuit_DB(int nbr_link, ArrayList<link_cost> linkcost){
         this.nbr_link=nbr_link;
         this.linkcost=linkcost;
