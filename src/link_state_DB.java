@@ -187,7 +187,7 @@ public class link_state_DB {
             }else if(rib.get(i).pred.get(0)==-1){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
             }else{
-                    msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(1) + ", " +rib.get(i).cost+"\n";
+                    msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(0) + ", " +rib.get(i).cost+"\n";
             }
         }
         return msg;
