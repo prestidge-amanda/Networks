@@ -124,7 +124,7 @@ public class link_state_DB {
         }
 
       //  notVisited.remove(currentRouterId);
-        ArrayList<Integer> path = new ArrayList<Integer>()
+        ArrayList<Integer> path = new ArrayList<Integer>();
         for(int i=0; i<num_routers;i++){
             System.out.println("start");
             int minDistance=Integer.MAX_VALUE;
