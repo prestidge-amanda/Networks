@@ -124,7 +124,7 @@ public class link_state_DB {
         }
 
       //  notVisited.remove(currentRouterId);
-
+        ArrayList<Integer> path = new ArrayList<Integer>()
         for(int i=0; i<num_routers;i++){
             System.out.println("start");
             int minDistance=Integer.MAX_VALUE;
@@ -142,7 +142,7 @@ public class link_state_DB {
             System.out.println(index);
             if(index!=-1){
                 notVisited.set(index,true);
-
+                path.add(index+1);
                 for(int k=0;k<data.get(index).size();k++){
                     System.out.println(index + " in loop" + links.get(data.get(index).get(k).getLink_id()-1).size());
                     if(links.get(data.get(index).get(k).getLink_id()-1).get(2)!=-1){
@@ -152,7 +152,7 @@ public class link_state_DB {
                         }
                         System.out.println("neighbour"+ router);
                         if(rib.get(router).cost>minDistance+data.get(index).get(k).getCost()){
-                            rib.get(router).pred.add(index+1);
+                            rib.get(router).pred=new ArrayList<>(path);
                             rib.get(router).cost=minDistance+data.get(index).get(k).getCost();
                         }
                     }
@@ -187,7 +187,7 @@ public class link_state_DB {
             }else if(rib.get(i).pred.get(0)==-1){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
             }else{
-                msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(0) + ", " +rib.get(i).cost+"\n";
+                    msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(1) + ", " +rib.get(i).cost+"\n";
             }
         }
         return msg;
