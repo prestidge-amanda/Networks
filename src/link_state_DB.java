@@ -126,31 +126,26 @@ public class link_state_DB {
       //  notVisited.remove(currentRouterId);
         ArrayList<Integer> path = new ArrayList<Integer>();
         for(int i=0; i<num_routers;i++){
-            System.out.println("start");
             int minDistance=Integer.MAX_VALUE;
             int index =-1;
 
             // find smallest cost router edge - source initially
             for(int j=0;j<num_routers;j++){
-                System.out.println("new: "+rib.get(j).cost+ " min: "+minDistance);
                 if(rib.get(j).cost<minDistance&&notVisited.get(j)==false){
                     index=j;
                     minDistance=rib.get(j).cost;
                 }
             }
 
-            System.out.println(index);
             if(index!=-1){
                 notVisited.set(index,true);
                 path.add(index+1);
                 for(int k=0;k<data.get(index).size();k++){
-                    System.out.println(index + " in loop" + links.get(data.get(index).get(k).getLink_id()-1).size());
                     if(links.get(data.get(index).get(k).getLink_id()-1).get(2)!=-1){
                         int router = links.get(data.get(index).get(k).getLink_id()-1).get(1)-1;
                         if(router==index){
                             router=links.get(data.get(index).get(k).getLink_id()-1).get(2)-1;
                         }
-                        System.out.println("neighbour"+ router);
                         if(rib.get(router).cost>minDistance+data.get(index).get(k).getCost()){
                             rib.get(router).pred= new ArrayList<Integer>();
                             rib.get(router).pred.add(index);
