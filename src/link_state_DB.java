@@ -152,13 +152,29 @@ public class link_state_DB {
                         }
                         System.out.println("neighbour"+ router);
                         if(rib.get(router).cost>minDistance+data.get(index).get(k).getCost()){
-                            rib.get(router).pred=new ArrayList<>(path);
+                            rib.get(router).pred= new ArrayList<Integer>();
+                            rib.get(router).pred.add(index);
                             rib.get(router).cost=minDistance+data.get(index).get(k).getCost();
                         }
                     }
                 }
             }else{
                 break;
+            }
+        }
+
+        for (int i=0;i<num_routers;i++){
+            int check = i;
+            boolean looking=true;
+            if (rib.get(i).pred.size()!=0) {
+                while (looking) {
+                    if (rib.get(rib.get(check).pred.get(0)).pred.get(0) != currentRouterId && rib.get(rib.get(check).pred.get(0)).pred.get(0) != -1) {
+                        check = rib.get(check).pred.get(0);
+                    } else {
+                        looking = false;
+                    }
+                }
+                rib.get(i).pred.add(check);
             }
         }
     }
@@ -187,7 +203,7 @@ public class link_state_DB {
             }else if(rib.get(i).pred.get(0)==-1){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
             }else{
-                    msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(0) + ", " +rib.get(i).cost+"\n";
+                    msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(1) + ", " +rib.get(i).cost+"\n";
             }
         }
         return msg;
