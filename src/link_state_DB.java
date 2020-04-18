@@ -167,11 +167,11 @@ public class link_state_DB {
             int check = i;
             boolean looking=true;
             if (rib.get(i).pred.size()!=0&&i!=currentRouterId-1) {
-                if (rib.get(i).pred.get(0) == currentRouterId) {
+                if (rib.get(i).pred.get(0) == currentRouterId-1) {
                     looking = false;
                 }
                 while (looking) {
-                    if (rib.get(check).pred.get(0) != currentRouterId) {
+                    if (rib.get(check).pred.get(0) != currentRouterId-1) {
                         check = rib.get(check).pred.get(0);
                     } else {
                         looking = false;
