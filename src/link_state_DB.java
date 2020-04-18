@@ -130,6 +130,7 @@ public class link_state_DB {
       //  notVisited.remove(currentRouterId);
 
         for(int i=0; i<num_routers;i++){
+            System.out.println("start");
             int minDistance=Integer.MAX_VALUE;
             int index =-1;
 
@@ -152,6 +153,7 @@ public class link_state_DB {
                         if(router==index){
                             router=links.get(data.get(index).get(k).getLink_id()-1).get(2)-1;
                         }
+                        System.out.println("neighbour"+ router);
                         if(rib.get(router).get(1)>minDistance+data.get(index).get(k).getCost()){
                             rib.get(router).set(0, data.get(index).get(k).getLink_id());
                             rib.get(router).set(1,minDistance+data.get(index).get(k).getCost());
