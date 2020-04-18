@@ -156,7 +156,7 @@ public class link_state_DB {
                         }
                         System.out.println("neighbour"+ router);
                         if(rib.get(router).get(1)>minDistance+data.get(index).get(k).getCost()){
-                            rib.get(router).set(0, data.get(index).get(k).getLink_id());
+                            rib.get(router).set(0, index+1);
                             rib.get(router).set(1,minDistance+data.get(index).get(k).getCost());
                         }
                     }
