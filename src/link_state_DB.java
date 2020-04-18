@@ -153,7 +153,7 @@ public class link_state_DB {
                         System.out.println("neighbour"+ router);
                         if(rib.get(router).cost>minDistance+data.get(index).get(k).getCost()){
                             rib.get(router).pred= new ArrayList<Integer>();
-                            rib.get(router).pred.add(index+1);
+                            rib.get(router).pred.add(index);
                             rib.get(router).cost=minDistance+data.get(index).get(k).getCost();
                         }
                     }
@@ -177,7 +177,7 @@ public class link_state_DB {
                         looking = false;
                     }
                 }
-                rib.get(i).pred.add(check);
+                rib.get(i).pred.add(check+1);
             }
         }
     }
