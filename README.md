@@ -36,8 +36,7 @@ router4.log
 router5.log
 
 Each log file contains each of the messages sent and received at the router and the topology database
-and routing information base each time there is a change to the topology database. The RIB is not correct. 
-It just outputs the initial RIB over and over.
+and routing information base each time there is a change to the topology database. 
 
 4. Tested on:
 ubuntu1804-002.student.cs.uwaterloo.ca
