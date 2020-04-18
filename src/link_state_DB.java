@@ -144,10 +144,10 @@ public class link_state_DB {
                 notVisited.set(index,true);
 
                 for(int k=0;k<data.get(index).size();k++){
-                    if(links.get(data.get(index).get(k).getLink_id()-1).get(1)!=-1){
-                        int router = links.get(data.get(index).get(k).getLink_id()-1).get(0)-1;
+                    if(links.get(data.get(index).get(k).getLink_id()-1).get(2)!=-1){
+                        int router = links.get(data.get(index).get(k).getLink_id()-1).get(1)-1;
                         if(router==index){
-                            router=links.get(data.get(index).get(k).getLink_id()-1).get(1)-1;
+                            router=links.get(data.get(index).get(k).getLink_id()-1).get(2)-1;
                         }
                         if(rib.get(router).get(1)>minDistance+data.get(index).get(k).getCost()){
                             rib.get(router).set(0, data.get(index).get(k).getLink_id());
