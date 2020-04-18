@@ -132,14 +132,17 @@ public class link_state_DB {
         for(int i=0; i<num_routers;i++){
             int minDistance=Integer.MAX_VALUE;
             int index =-1;
-            // initialize distance
+
+            // find smallest cost router edge - source initially
             for(int j=0;j<num_routers;j++){
+                System.out.println("new: "+rib.get(j).get(1)+ " min: "+minDistance);
                 if(rib.get(j).get(1)<minDistance&&notVisited.get(j)==false){
                     index=j;
                     minDistance=rib.get(j).get(1);
                 }
             }
 
+            System.out.println(index);
             if(index!=-1){
                 notVisited.set(index,true);
 
