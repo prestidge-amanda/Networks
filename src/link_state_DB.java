@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 public class link_state_DB {
     private ArrayList<ArrayList<packet>> data;
-    private ArrayList<ArrayList<packet>> link;
     private ArrayList<ArrayList<Integer>> rib;
+    private ArrayList<ArrayList <Integer>> links;
     private int currentRouterId;
     private final int num_routers=5;
 
     link_state_DB(circuit_DB circuit_db,int currentRouterId){
         this.data = new ArrayList<ArrayList<packet>>();
-        this.link = new ArrayList<ArrayList<packet>>();
+        this.links=new ArrayList<ArrayList<Integer>>();
         this.currentRouterId=currentRouterId;
         int sender;
         int router_id;
@@ -20,20 +20,25 @@ public class link_state_DB {
         for(int j=0;j<num_routers;j++){
             data.add(new ArrayList<packet>());
         }
-        for(int k=0; k<7;k++){
-            link.add(new ArrayList<packet>());
+
+        for(int i=0;i<7;i++){
+            links.add(new ArrayList<Integer>());
         }
+
         for(int i= 0; i<circuit_db.getNumLinks();i++){
+            ArrayList<Integer> entry= new ArrayList<>();
             sender = currentRouterId;
             router_id = currentRouterId;
             link_id = circuit_db.getLink(i);
             cost=circuit_db.getLinkCost(i);
+            entry.add(cost);
+            entry.add(currentRouterId);
+            entry.add(-1);
             via = -1;
             p = new packet(sender,router_id,link_id,cost,via);
             data.get(currentRouterId-1).add(p);
-            link.get(link_id-1).add(p);
+            links.set(link_id-1,entry);
         }
-
         rib_DB();
     }
 
@@ -84,23 +89,31 @@ public class link_state_DB {
             }
         }
         data.get((p.getRouter_id()-1)).add(p);
-        link.get(p.getLink_id()-1).add(p);
+        if(links.get(p.getLink_id()-1).size()>0){
+            ArrayList<Integer> entry = new ArrayList<>(links.get(p.getLink_id()-1));
+            entry.add(p.getRouter_id());
+            links.set(p.getLink_id()-1,entry);
+        }else{
+            ArrayList<Integer> entry = new ArrayList<>();
+            entry.add(p.getCost());
+            entry.add(p.getRouter_id());
+            entry.add(-1);
+            links.set(p.getLink_id()-1,entry);
+        }
         updateRIB();
         return true;
     }
 
     private void updateRIB(){
-      int distance=0;
-        int currIndex=currentRouterId-1;;
-        int currShort=0;
-        int nextIndex=currentRouterId-1;
-        ArrayList<Boolean> visited = new ArrayList<>();
+        int distance=0;
+        int prevNode=currentRouterId-1;
+        ArrayList<Boolean> notVisited=new ArrayList<Boolean>();
 
         this.rib=new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> entry;
         for (int i=0;i<num_routers;i++){
             entry = new ArrayList<Integer>();
-            if (i==currIndex){
+            if (i==prevNode){
                 entry.add(-1);
                 entry.add(0);
             }else{
@@ -110,49 +123,37 @@ public class link_state_DB {
             this.rib.add(entry);
         }
 
-        int connected=0;
-      for(int k=0;k<link.size();k++){
-          if(link.get(k).size()>1){
-              visited.add(false);
-              connected++;
-          }else{
-              visited.add(true);
-          }
-      }
+        for(int i=0;i<num_routers;i++){
+            notVisited.add(false);
+        }
 
-      int check;
-      visited.set(currIndex,true);
-       for(int i=0;i<connected-1;i++){
+      //  notVisited.remove(currentRouterId);
 
-            //find shortest link
-           currShort=Integer.MAX_VALUE;
-            for(int j=0;j<data.get(currIndex).size();j++) {
-                System.out.print("curr short:" + currShort+" curr index:"+ currIndex +"\n");
-                if(link.get(data.get(currIndex).get(j).getLink_id()-1).size()>1){
-                    if(link.get(data.get(currIndex).get(j).getLink_id()-1).get(0).getRouter_id()-1!=currIndex){
-                        check=link.get(data.get(currIndex).get(j).getLink_id()-1).get(0).getRouter_id()-1;
-                    }else{
-                        check=link.get(data.get(currIndex).get(j).getLink_id()-1).get(1).getRouter_id()-1;
-                    }
-                    if (currShort > data.get(currIndex).get(j).getCost() && visited.get(check)==false) {
-                        currShort = data.get(currIndex).get(j).getCost();
-                        nextIndex=check;
-                    }
+        for(int i=0; i<num_routers;i++){
+            int minDistance=Integer.MAX_VALUE;
+            int index =-1;
+            // initialize distance
+            for(int j=0;j<num_routers;j++){
+                if(rib.get(j).get(1)<minDistance&&notVisited.get(j)==false){
+                    index=j;
+                    minDistance=rib.get(j).get(1);
                 }
             }
 
-            System.out.print("curr short:" + currShort+" curr index:"+ currIndex +"\n");
-            distance+=currShort;
-            currIndex=nextIndex;
-            visited.set(currIndex,true);
+            if(index!=-1){
+                notVisited.set(index,true);
 
-            // update neighbours of shortest
-            for(int j=0;j<data.get(currIndex).size();j++){
-                int calc = distance+data.get(currIndex).get(j).getCost();
-                System.out.println("r"+data.get(currIndex).get(j).getRouter_id()+" distance "+ calc + "rib" + rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) );
-                if((rib.get(data.get(currIndex).get(j).getRouter_id()-1).get(1) > (distance+data.get(currIndex).get(j).getCost()))&& visited.get(data.get(currIndex).get(j).getRouter_id()-1)==false){
-                    rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(0,data.get(currIndex).get(j).getVia());
-                    rib.get(data.get(currIndex).get(j).getRouter_id()-1).set(1,data.get(currIndex).get(j).getCost()+distance);
+                for(int k=0;k<data.get(index).size();k++){
+                    if(links.get(data.get(index).get(k).getLink_id()-1).get(1)!=-1){
+                        int router = links.get(data.get(index).get(k).getLink_id()-1).get(0)-1;
+                        if(router==index){
+                            router=links.get(data.get(index).get(k).getLink_id()-1).get(1)-1;
+                        }
+                        if(rib.get(router).get(1)>minDistance+data.get(index).get(k).getCost()){
+                            rib.get(router).set(0, data.get(index).get(k).getLink_id());
+                            rib.get(router).set(1,minDistance+data.get(index).get(k).getCost());
+                        }
+                    }
                 }
             }
         }
