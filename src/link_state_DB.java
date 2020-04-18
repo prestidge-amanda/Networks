@@ -91,7 +91,7 @@ public class link_state_DB {
         data.get((p.getRouter_id()-1)).add(p);
         if(links.get(p.getLink_id()-1).size()>0){
             ArrayList<Integer> entry = new ArrayList<>(links.get(p.getLink_id()-1));
-            entry.add(p.getRouter_id());
+            entry.set(2,p.getRouter_id());
             links.set(p.getLink_id()-1,entry);
         }else{
             ArrayList<Integer> entry = new ArrayList<>();
