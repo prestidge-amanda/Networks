@@ -148,6 +148,7 @@ public class link_state_DB {
                 notVisited.set(index,true);
 
                 for(int k=0;k<data.get(index).size();k++){
+                    System.out.println(index + " in loop" + links.get(data.get(index).get(k).getLink_id()-1).size());
                     if(links.get(data.get(index).get(k).getLink_id()-1).get(2)!=-1){
                         int router = links.get(data.get(index).get(k).getLink_id()-1).get(1)-1;
                         if(router==index){
