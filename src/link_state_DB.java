@@ -158,6 +158,8 @@ public class link_state_DB {
                         }
                     }
                 }
+            }else{
+                break;
             }
         }
     }
