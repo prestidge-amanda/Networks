@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class link_state_DB {
     private ArrayList<ArrayList<packet>> data;
-    private ArrayList<ArrayList<Integer>> rib;
+    private ArrayList<ribEntry> rib;
     private ArrayList<ArrayList <Integer>> links;
     private int currentRouterId;
     private final int num_routers=5;
@@ -43,16 +43,14 @@ public class link_state_DB {
     }
 
     private void rib_DB(){
-        this.rib=new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> entry;
+        this.rib=new ArrayList<ribEntry>();
+        ribEntry entry;
         for (int i=0;i<num_routers;i++){
-            entry = new ArrayList<Integer>();
             if (i==currentRouterId-1){
-                    entry.add(-1);
-                    entry.add(0);
+                entry = new ribEntry(0);
+                entry.pred.add(-1);
             }else{
-                    entry.add(Integer.MAX_VALUE);
-                    entry.add(Integer.MAX_VALUE);
+                entry = new ribEntry(Integer.MAX_VALUE);
             }
             this.rib.add(entry);
         }
@@ -109,16 +107,14 @@ public class link_state_DB {
         int prevNode=currentRouterId-1;
         ArrayList<Boolean> notVisited=new ArrayList<Boolean>();
 
-        this.rib=new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> entry;
+        this.rib=new ArrayList<ribEntry>();
+        ribEntry entry;
         for (int i=0;i<num_routers;i++){
-            entry = new ArrayList<Integer>();
             if (i==prevNode){
-                entry.add(-1);
-                entry.add(0);
+                entry = new ribEntry(0);
+                entry.pred.add(-1);
             }else{
-                entry.add(Integer.MAX_VALUE);
-                entry.add(Integer.MAX_VALUE);
+                entry = new ribEntry(Integer.MAX_VALUE);
             }
             this.rib.add(entry);
         }
@@ -136,10 +132,10 @@ public class link_state_DB {
 
             // find smallest cost router edge - source initially
             for(int j=0;j<num_routers;j++){
-                System.out.println("new: "+rib.get(j).get(1)+ " min: "+minDistance);
-                if(rib.get(j).get(1)<minDistance&&notVisited.get(j)==false){
+                System.out.println("new: "+rib.get(j).cost+ " min: "+minDistance);
+                if(rib.get(j).cost<minDistance&&notVisited.get(j)==false){
                     index=j;
-                    minDistance=rib.get(j).get(1);
+                    minDistance=rib.get(j).cost;
                 }
             }
 
@@ -155,9 +151,9 @@ public class link_state_DB {
                             router=links.get(data.get(index).get(k).getLink_id()-1).get(2)-1;
                         }
                         System.out.println("neighbour"+ router);
-                        if(rib.get(router).get(1)>minDistance+data.get(index).get(k).getCost()){
-                            rib.get(router).set(0, index+1);
-                            rib.get(router).set(1,minDistance+data.get(index).get(k).getCost());
+                        if(rib.get(router).cost>minDistance+data.get(index).get(k).getCost()){
+                            rib.get(router).pred.add(router+1);
+                            rib.get(router).cost=minDistance+data.get(index).get(k).getCost();
                         }
                     }
                 }
@@ -186,12 +182,12 @@ public class link_state_DB {
         int index;
         for(int i=0;i<num_routers;i++){
             index=i+1;
-            if(rib.get(i).get(0)==-1){
+            if(rib.get(i).pred.size()==0) {
+                msg += "R" + currentRouterId + " -> R" + index + " -> INF, INF\n";
+            }else if(rib.get(i).pred.get(0)==-1){
                 msg+= "R"+currentRouterId+" -> R"+index +" -> Local, 0\n";
-            }else if(rib.get(i).get(0)==Integer.MAX_VALUE){
-                msg+= "R"+currentRouterId+" -> R"+index +" -> INF, INF\n";
             }else{
-                msg+= "R"+currentRouterId+" -> R"+index +" -> R"+rib.get(i).get(0)+ ", " +rib.get(i).get(1)+"\n";
+                msg+= "R"+currentRouterId+" -> R"+index +" -> R"+ rib.get(i).pred.get(0) + ", " +rib.get(i).cost+"\n";
             }
         }
         return msg;
